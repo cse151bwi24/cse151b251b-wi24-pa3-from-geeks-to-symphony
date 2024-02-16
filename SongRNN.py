@@ -15,7 +15,9 @@ class SongRNN(nn.Module):
         NUM_LAYERS = config["no_layers"]
         MODEL_TYPE = config["model_type"]
         DROPOUT_P = config["dropout"]
-
+        self.h_n = torch.zeros(1, HIDDEN_SIZE)
+        self.c_n = torch.zeros(1, HIDDEN_SIZE)
+        
         self.model_type = MODEL_TYPE
         self.input_size = input_size
         self.hidden_size = HIDDEN_SIZE
@@ -26,12 +28,20 @@ class SongRNN(nn.Module):
         """
         Complete the code
 
-        TODO: 
+        TODO:
         (i) Initialize embedding layer with input_size and hidden_size
         (ii) Initialize the recurrent layer based on model type (i.e., LSTM or RNN) using hidden size and num_layers
         (iii) Initialize linear output layer using hidden size and output size
         (iv) Initialize dropout layer with dropout probability
         """
+        self.encoder = nn.Embedding(self.input_size, self.hidden_size)
+        if(self.model_type == 'lstm'):
+            self.recurrentLayer = nn.LSTM(self.hidden_size, self.hidden_size, num_layers = self.num_layers)
+        else:
+            self.recurrentLayer = nn.RRN(self.hidden_size, self.hidden_size, num_layers = self.num_layers)
+        self.decoder = nn.Linear(self.hidden_size, self.output_size)
+        self.DROPOUT = nn.Dropout(p=self.dropout)
+        
         
     def init_hidden(self):
         """
@@ -44,8 +54,8 @@ class SongRNN(nn.Module):
 
         Initialise with zeros.
         """
-
-        raise NotImplementedError
+        self.h_n = torch.zeros(1, HIDDEN_SIZE)
+        self.c_n = torch.zeros(1, HIDDEN_SIZE)
         
     def forward(self, seq):
         """
@@ -68,4 +78,13 @@ class SongRNN(nn.Module):
         (iv) Pass through the linear output layer
         """
 
-        raise NotImplementedError
+        e1 = self.encoder(seq)
+        if(self.model_type == 'lstm'):
+            h_out, hc = self.recurrentLayer(e1, (h_n, c_n))
+            self.h_n = hc[0]
+            self.c_n = hc[1]
+        else:
+            h_out, self.h_n = self.recurrentLayer(e1, h_n)
+        d1 = self.DROPOUT(h_out)
+        output = self.decoder(d1)
+        return output, self.h_n
