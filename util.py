@@ -16,7 +16,8 @@ def get_random_song_slice(data, sequence_length):
     Returns:
         list: A random slice of the input data with the specified sequence length.
     """
-    raise NotImplementedError
+    startIndex = random.randInt(0, len(data)-sequence_length);
+    return data[startIndex : startIndex+sequence_length];
 
 def characters_to_tensor(sequence, char_idx_map):
     """
@@ -43,7 +44,7 @@ def get_random_song_sequence_target(song, char_idx_map, sequence_length):
         sequence_length (int): The desired length of the sequence to extract.
 
     Returns:
-        tuple: A tuple containing the PyTorch tensor representing the input sequence 
+        tuple: A tuple containing the PyTorch tensor representing the input sequence
                and the PyTorch tensor representing the target sequence.
     """
     sequence = get_random_song_slice(song, sequence_length)
@@ -65,7 +66,7 @@ def get_character_from_index(char_idx_map, index):
 
 def plot_losses(train_losses, val_losses, fname):
     """
-    Plots the training and validation losses across epochs and saves the plot as an image file with name - fname(function argument). 
+    Plots the training and validation losses across epochs and saves the plot as an image file with name - fname(function argument).
 
     Args:
         train_losses (list): List of training losses for each epoch.
@@ -111,7 +112,7 @@ def pad(song, data, pad_factor=20):
 
 def show_values(pc, song, fmt="%.2f", **kw):
     """
-    Utility function to plot the heatmap. 
+    Utility function to plot the heatmap.
     (DON'T CHANGE)
 
     Returns:

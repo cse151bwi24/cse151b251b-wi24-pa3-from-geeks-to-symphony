@@ -1,0 +1,18 @@
+<start>
+X:1759
+T:F\"ur Elise
+T:Bagatelle No.25 in A, WoO.59
+C:Ludwig van Beethoven
+O:Germany
+Z:Transcribed by Frank Nordberg - http://www.musicaviva.com
+F:http://abc.musicaviva.com/tunes/beethoven-ludwig-van/be059/be059-pno2.abc
+V:1 Program 1 0 Piano
+V:2 Program 1 0 bass Piano
+M:3/8
+L:1/16
+Q:3/8=40
+K:Am
+V:1
+e^d|e^deB=dc|A2 z CEA|B2 z E^GB|c2 z Ee^d|
+V:2
+z2|z6|A,,E,A, z z2|E,,E,^G, z z2|A,,E,A, z z2|
