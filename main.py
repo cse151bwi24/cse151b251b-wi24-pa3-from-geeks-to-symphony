@@ -48,7 +48,7 @@ if __name__ == "__main__":
 
     in_size, out_size = len(char_set), len(char_set)
     # Initialize the SongRNN model
-    model = SongRNN(in_size, out_size, config)
+    model = SongRNN(in_size, out_size, config, device)
 
     # If evaluating model only and trained model path is provided:
     if(evaluate_model_only and model_path != ""):
@@ -85,6 +85,5 @@ if __name__ == "__main__":
     # housekeeping
     gc.collect()
     torch.cuda.empty_cache()
-
 
 
