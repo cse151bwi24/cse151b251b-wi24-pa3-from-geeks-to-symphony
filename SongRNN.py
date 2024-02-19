@@ -91,6 +91,7 @@ class SongRNN(nn.Module):
             h_out, self.h_n = self.recurrentLayer(e1, h_n)
         dr1 = self.DROPOUT(h_out)
         de1 = self.decoder(dr1)
+
 #         prob = torch.nn.functional.softmax(de1, dim=1)
 #         output = torch.squeeze(torch.multinomial(prob, 1))
         
