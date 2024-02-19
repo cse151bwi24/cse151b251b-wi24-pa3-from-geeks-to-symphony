@@ -70,7 +70,9 @@ def train(model, data, data_val, char_idx_map, config, device):
 # 				print("output_item",output_item)
 				loss = criterion(pred, output_item)
 				totalLoss += loss
-			totalLoss.backward()     
+			totalLoss.backward()   
+			optimizer.step()
+			optimizer.zero_grad()
 			avg_loss_per_sequence = totalLoss/(SEQ_SIZE-1)
 			totalTrainLossPerEpoch += avg_loss_per_sequence
 
@@ -112,8 +114,9 @@ def train(model, data, data_val, char_idx_map, config, device):
 					ouput_item = output_mask[index].to(device)
 					pred, _ = model(input_item)
 					pred = pred.to(device)
-					totalLoss += criterion(pred, output_item)
-				avg_loss_per_sequence = totalLoss/SEQ_SIZE
+					loss = criterion(pred, output_item)
+					totalLoss += loss
+				avg_loss_per_sequence = totalLoss/(SEQ_SIZE-1)
 				totalValLossPerEpoch += avg_loss_per_sequence
 
 
