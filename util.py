@@ -16,7 +16,7 @@ def get_random_song_slice(data, sequence_length):
     Returns:
         list: A random slice of the input data with the specified sequence length.
     """
-    startIndex = random.randInt(0, len(data)-sequence_length);
+    startIndex = random.randint(0, len(data)-sequence_length);
     return data[startIndex : startIndex+sequence_length];
 
 def characters_to_tensor(sequence, char_idx_map):

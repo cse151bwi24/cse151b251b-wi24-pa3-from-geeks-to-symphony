@@ -40,7 +40,7 @@ class SongRNN(nn.Module):
         if(self.model_type == 'lstm'):
             self.recurrentLayer = nn.LSTM(self.hidden_size, self.hidden_size, num_layers = self.num_layers)
         else:
-            self.recurrentLayer = nn.RRN(self.hidden_size, self.hidden_size, num_layers = self.num_layers)
+            self.recurrentLayer = nn.RNN(self.hidden_size, self.hidden_size, num_layers = self.num_layers)
         self.decoder = nn.Linear(self.hidden_size, self.output_size)
         self.DROPOUT = nn.Dropout(p=self.dropout)
         
@@ -91,7 +91,10 @@ class SongRNN(nn.Module):
             h_out, self.h_n = self.recurrentLayer(e1, h_n)
         dr1 = self.DROPOUT(h_out)
         de1 = self.decoder(dr1)
-        prob = torch.nn.functional.softmax(de1, dim=1)
+
+#         prob = torch.nn.functional.softmax(de1, dim=1)
 #         output = torch.squeeze(torch.multinomial(prob, 1))
         
-        return torch.squeeze(prob), self.h_n
+        
+#         return torch.squeeze(prob), self.h_n
+        return torch.squeeze(de1), self.h_n
