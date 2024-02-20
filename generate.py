@@ -33,13 +33,13 @@ def generate_song(model, device, char_idx_map, max_len=1000, temp=0.8, prime_str
     with torch.no_grad(): # we don't need to calculate the gradient in the validation/testing
         # "build up" hidden state using the beginging of a song '<start>'
         generated_song = prime_str
-        prime = characters_to_tensor(generated_song, char_idx_map)
+        prime = characters_to_tensor(generated_song, char_idx_map).to(device)
         activations = []
         for i in range(len(prime)):
             _ = model(prime[i])
 
         '''
-        TODOs: 
+        TODOs:
             - Continue generating the rest of the sequence until reaching the maximum length or encountering the end token.
             - Incorporate the temperature parameter to determine the generated/predicted character.
             - Add the generated character to the `generated_song` and then return `generated_song`.
@@ -48,18 +48,19 @@ def generate_song(model, device, char_idx_map, max_len=1000, temp=0.8, prime_str
         for i in range(max_len):
             # Get the last character's index
             
-            input_char = prime[-1].view(1, 1)
+            input_char = prime[-1]
 
 #             print(f"Input char: {input_char.shape}")
             # Pass the character through the model
-            output, _ = model(torch.squeeze(input_char))
+            output, _ = model(input_char)
 
             # Apply temperature to restrain ramdomness in the note that the model is generating
-            output_dist = nn.functional.softmax(output / temp, dim=0).squeeze().cpu().numpy()
+            output_dist = nn.functional.softmax(output / temp, dim=0).squeeze().to(device)
 
             # Sample a character from the distribution
-            sampled_char_idx = np.random.choice(len(output_dist), p=output_dist)
+            sampled_char_idx = torch.multinomial(output_dist, 1).to(device)
 #             sampled_char_idx = np.random.choice(len(output.cpu), p=output.cpu)
+            prime = torch.cat((prime, sampled_char_idx))
 
             # Map the sampled index back to a character
             if sampled_char_idx in char_idx_map.values():
@@ -68,8 +69,8 @@ def generate_song(model, device, char_idx_map, max_len=1000, temp=0.8, prime_str
 #                         sampled_char = char_idx_map[key]
                         sampled_char = key
                         generated_song += key
-            else: 
-                sampled_char = '<unknown>' 
+            else:
+                sampled_char = '<unknown>'
             # Add the generated character to the song
 #             generated_song += sampled_char
             
@@ -93,7 +94,7 @@ def generate_song(model, device, char_idx_map, max_len=1000, temp=0.8, prime_str
         hi = "char"
         # continue
         # TODO: Call the generate_heatmap function to form the heatmap
-        generate_heatmap(generated_song, heatmap,neuron_idx = 0)
+#         generate_heatmap(generated_song, heatmap,neuron_idx = 0)
 
 #     raise NotImplementedError
     return generated_song

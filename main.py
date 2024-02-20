@@ -3,7 +3,7 @@ from constants import *
 from SongRNN import *
 import torch
 from train import *
-# from generate import *
+from generate import *
 import json
 import argparse
 import gc
