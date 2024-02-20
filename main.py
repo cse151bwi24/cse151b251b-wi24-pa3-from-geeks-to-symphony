@@ -72,15 +72,15 @@ if __name__ == "__main__":
 
     prime_str = '<start>'
 
-#     # Generate a song using the trained model
-#     generated_song = generate_song(model, device, char_idx_map, max_len=MAX_GENERATION_LENGTH, temp=TEMPERATURE,
-#                                     prime_str=prime_str, show_heatmap=SHOW_HEATMAP)
+    # Generate a song using the trained model
+    generated_song = generate_song(model, device, char_idx_map, max_len=MAX_GENERATION_LENGTH, temp=TEMPERATURE,
+                                    prime_str=prime_str, show_heatmap=SHOW_HEATMAP)
 
-#     # Write the generated song to a file
-#     with open(generated_song_file_path, "w") as file:
-#         file.write(generated_song)
+    # Write the generated song to a file
+    with open(generated_song_file_path, "w") as file:
+        file.write(generated_song)
 
-#     print("Generated song is written to : ", generated_song_file_path)
+    print("Generated song is written to : ", generated_song_file_path)
 
     # housekeeping
     gc.collect()

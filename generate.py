@@ -93,7 +93,7 @@ def generate_song(model, device, char_idx_map, max_len=1000, temp=0.8, prime_str
         hi = "char"
         # continue
         # TODO: Call the generate_heatmap function to form the heatmap
-#         generate_heatmap(generated_song, heatmap,neuron_idx = 0)
+        generate_heatmap(generated_song, heatmap,neuron_idx = 0)
 
 #     raise NotImplementedError
     return generated_song

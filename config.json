@@ -3,13 +3,13 @@
 	
 	"sequence_size": 30, 
 	
-	"no_epochs": 100, 
+	"no_epochs": 30, 
 	
 	"no_layers": 1,
 
 	"hidden_size": 150, 
 
-	"dropout": 0.1,
+	"dropout": 0,
 
 	"model_type": "lstm", 
 
@@ -21,9 +21,9 @@
 
 	"generated_song_file_path": "./song_generated.txt", 
 
-	"show_heatmap": false,
+	"show_heatmap": true,
 
-	"loss_plot_file_name": "baseline_loss_plot", 
+	"loss_plot_file_name": "baseline_loss_plot_generate_songs", 
 
 	"evaluate_model_only": false, 
 

@@ -27,6 +27,7 @@ def train(model, data, data_val, char_idx_map, config, device):
 	criterion = nn.CrossEntropyLoss() # TODO: Initialize loss function
 	# Lists to store training and validation losses over the epochs
 	train_losses, validation_losses = [], []
+	best_train_loss, best_val_loss = float('inf'), float('inf')
 
 	# Training over epochs
 	for epoch in range(N_EPOCHS):
@@ -82,8 +83,10 @@ def train(model, data, data_val, char_idx_map, config, device):
 			sys.stdout.write(msg)
 			sys.stdout.flush()
 		print()
-		train_losses.append((totalTrainLossPerEpoch/len(data)).item())
-
+		train_loss = (totalTrainLossPerEpoch/len(data)).item()
+		train_losses.append(train_loss)
+		if train_loss < best_train_loss:
+			best_train_loss = train_loss
 
 
 	    # TODO: Append the avg loss on the training dataset to train_losses list
@@ -123,13 +126,15 @@ def train(model, data, data_val, char_idx_map, config, device):
 
 		    	# Display progress
 				msg = '\rValidation Epoch: {}, {:.2f}% iter: {} Loss: {:.4}'.format(epoch, (i+1)/len(data_val)*100, i, avg_loss_per_sequence_val)
-
 				sys.stdout.write(msg)
 				sys.stdout.flush()
 			print()
 
 		# TODO: Append the avg loss on the validation dataset to validation_losses list
-		validation_losses.append((totalValLossPerEpoch/len(data_val)).item())
+		validation_loss = (totalValLossPerEpoch/len(data_val)).item()
+		validation_losses.append(validation_loss)
+		if validation_loss < best_val_loss:
+			best_val_loss = validation_loss
 
 		model.train() #TURNING THE TRAIN MODE BACK ON !
 		if not os.path.isdir('checkpoint'):
@@ -144,6 +149,6 @@ def train(model, data, data_val, char_idx_map, config, device):
                 'optimizer_state_dict': optimizer.state_dict(),
                 'loss': criterion,
                 }, './checkpoint/' + CHECKPOINT + '.t%s' % epoch)
-
+		print(f'best train loss: {best_train_loss} | best validation loss: {best_val_loss}')
 	return train_losses, validation_losses
 
