@@ -73,7 +73,7 @@ def train(model, data, data_val, char_idx_map, config, device):
 			totalLoss.backward()   
 			optimizer.step()
 			optimizer.zero_grad()
-			avg_loss_per_sequence = totalLoss/(SEQ_SIZE-1)
+			avg_loss_per_sequence = totalLoss / (SEQ_SIZE-1)
 			totalTrainLossPerEpoch += avg_loss_per_sequence
 
 
@@ -82,7 +82,8 @@ def train(model, data, data_val, char_idx_map, config, device):
 			sys.stdout.write(msg)
 			sys.stdout.flush()
 		print()
-		train_losses.append(totalTrainLossPerEpoch/len(data))
+		train_losses.append((totalTrainLossPerEpoch/len(data)).item())
+
 
 
 	    # TODO: Append the avg loss on the training dataset to train_losses list
@@ -107,27 +108,29 @@ def train(model, data, data_val, char_idx_map, config, device):
 				model.init_hidden() # Zero out the hidden layer (When you start a new song, the hidden layer state should start at all 0’s.)
 
 	    		#TODO: Finish next steps here
-				input_mask, output_mask = util.get_random_song_sequence_target(data[i], char_idx_map, SEQ_SIZE)
+				input_mask_val, output_mask_val = util.get_random_song_sequence_target(data_val[i], char_idx_map, SEQ_SIZE)
 				totalLoss = 0
 				for index in range(SEQ_SIZE-1):
-					input_item = input_mask[index].to(device)
-					ouput_item = output_mask[index].to(device)
-					pred, _ = model(input_item)
-					pred = pred.to(device)
-					loss = criterion(pred, output_item)
-					totalLoss += loss
-				avg_loss_per_sequence = totalLoss/(SEQ_SIZE-1)
-				totalValLossPerEpoch += avg_loss_per_sequence
+					input_item_val = input_mask_val[index].to(device)
+					ouput_item_val = output_mask_val[index].to(device)
+					pred_val, _ = model(input_item_val)
+					pred_val = pred_val.to(device)
+					loss_val = criterion(pred_val, ouput_item_val)
+					totalLoss += loss_val
+				avg_loss_per_sequence_val = totalLoss/(SEQ_SIZE-1)
+				totalValLossPerEpoch += avg_loss_per_sequence_val
 
 
 		    	# Display progress
-				msg = '\rValidation Epoch: {}, {:.2f}% iter: {} Loss: {:.4}'.format(epoch, (i+1)/len(data_val)*100, i, avg_loss_per_sequence)
+				msg = '\rValidation Epoch: {}, {:.2f}% iter: {} Loss: {:.4}'.format(epoch, (i+1)/len(data_val)*100, i, avg_loss_per_sequence_val)
+
 				sys.stdout.write(msg)
 				sys.stdout.flush()
 			print()
 
 		# TODO: Append the avg loss on the validation dataset to validation_losses list
-		validation_losses.append(totalValLossPerEpoch/len(data))
+		validation_losses.append((totalValLossPerEpoch/len(data_val)).item())
+
 		model.train() #TURNING THE TRAIN MODE BACK ON !
 		if not os.path.isdir('checkpoint'):
 			os.mkdir('checkpoint')
@@ -139,7 +142,7 @@ def train(model, data, data_val, char_idx_map, config, device):
                 'epoch': epoch + 1,
                 'model_state_dict': model.state_dict(),
                 'optimizer_state_dict': optimizer.state_dict(),
-                'loss': loss_function,
+                'loss': criterion,
                 }, './checkpoint/' + CHECKPOINT + '.t%s' % epoch)
 
 	return train_losses, validation_losses
