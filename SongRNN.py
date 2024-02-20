@@ -88,7 +88,7 @@ class SongRNN(nn.Module):
             self.h_n = hc[0]
             self.c_n = hc[1]
         else:
-            h_out, self.h_n = self.recurrentLayer(e1, h_n)
+            h_out, self.h_n = self.recurrentLayer(e1, self.h_n)
         dr1 = self.DROPOUT(h_out)
         de1 = self.decoder(dr1)
 
