@@ -43,16 +43,51 @@ def generate_song(model, device, char_idx_map, max_len=1000, temp=0.8, prime_str
             - Incorporate the temperature parameter to determine the generated/predicted character.
             - Add the generated character to the `generated_song` and then return `generated_song`.
         '''
+        for i in range(max_len):
+            # Get the last character's index
+            
+#             input_char = prime[-1].view(1, 1)
+            input_char = prime[-1]
+
+#             print(f"Input char: {input_char.shape}")
+            # Pass the character through the model
+            output, _ = model(torch.squeeze(input_char))
+
+            # Apply temperature to restrain ramdomness in the note that the model is generating
+            output_dist = nn.functional.softmax(output / temp, dim=1).squeeze().cpu().numpy()
+
+            # Sample a character from the distribution
+            sampled_char_idx = np.random.choice(len(output_dist), p=output_dist)
+
+            # Map the sampled index back to a character
+            sampled_char = idx_char_map[sampled_char_idx]
+
+            # Add the generated character to the song
+            generated_song += sampled_char
+            
+            # Retrieving activation values
+            activations.append(model.get_activation_values())
+            
+            heatmap = torch.stack(activations, dim=0)
+
+            # If the sampled character is the end token, break the loop
+            if sampled_char == '<end>':
+                break
+
+            # Prepare the sampled character for the next iteration
+            input_char = characters_to_tensor(sampled_char, char_idx_map)
 
     
     # Turn the model back to training mode
     model.train()
 
     if show_heatmap:
-        continue
+        # continue
         # TODO: Call the generate_heatmap function to form the heatmap
+        generate_heatmap(generated_song, heatmap,neuron_idx = 0)
 
-    raise NotImplementedError
+#     raise NotImplementedError
+    return generated_song
 
 def generate_heatmap(generated_song, heatmap, neuron_idx=0):
     """
