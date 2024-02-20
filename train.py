@@ -85,6 +85,7 @@ def train(model, data, data_val, char_idx_map, config, device):
 		train_losses.append((totalTrainLossPerEpoch/len(data)).item())
 
 
+
 	    # TODO: Append the avg loss on the training dataset to train_losses list
         
 	    # VAL: Evaluate Model on Validation dataset
@@ -122,12 +123,14 @@ def train(model, data, data_val, char_idx_map, config, device):
 
 		    	# Display progress
 				msg = '\rValidation Epoch: {}, {:.2f}% iter: {} Loss: {:.4}'.format(epoch, (i+1)/len(data_val)*100, i, avg_loss_per_sequence_val)
+
 				sys.stdout.write(msg)
 				sys.stdout.flush()
 			print()
 
 		# TODO: Append the avg loss on the validation dataset to validation_losses list
 		validation_losses.append((totalValLossPerEpoch/len(data_val)).item())
+
 		model.train() #TURNING THE TRAIN MODE BACK ON !
 		if not os.path.isdir('checkpoint'):
 			os.mkdir('checkpoint')
