@@ -14,6 +14,7 @@ class SongRNN(nn.Module):
         HIDDEN_SIZE = config["hidden_size"]
         NUM_LAYERS = config["no_layers"]
         MODEL_TYPE = config["model_type"]
+        print(MODEL_TYPE)
         DROPOUT_P = config["dropout"]
         self.device = device
         self.h_n = torch.zeros(1, HIDDEN_SIZE, device = "cuda")
@@ -38,7 +39,7 @@ class SongRNN(nn.Module):
         """
         self.encoder = nn.Embedding(self.input_size, self.hidden_size)
         if(self.model_type == 'lstm'):
-            self.recurrentLayer = nn.LSTM(self.hidden_size, self.hidden_size, num_layers = self.num_layers)
+            self.recurrentLayer = nn.LSTM(self.hidden_size, self.hidden_size, num_layers = self.num_layers, dropout=DROPOUT_P)
         else:
             self.recurrentLayer = nn.RNN(self.hidden_size, self.hidden_size, num_layers = self.num_layers)
         self.decoder = nn.Linear(self.hidden_size, self.output_size)
@@ -89,12 +90,7 @@ class SongRNN(nn.Module):
             self.c_n = hc[1]
         else:
             h_out, self.h_n = self.recurrentLayer(e1, self.h_n)
-        dr1 = self.DROPOUT(h_out)
-        de1 = self.decoder(dr1)
+        de1 = self.decoder(h_out)
 
-#         prob = torch.nn.functional.softmax(de1, dim=1)
-#         output = torch.squeeze(torch.multinomial(prob, 1))
-        
-        
-#         return torch.squeeze(prob), self.h_n
         return torch.squeeze(de1), self.h_n
+#         return torch.squeeze(de1), torch

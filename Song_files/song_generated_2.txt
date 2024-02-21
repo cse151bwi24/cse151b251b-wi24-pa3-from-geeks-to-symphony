@@ -1,0 +1,14 @@
+<start>
+X:12
+T:Scottische
+Z:id:hn-polka-38
+M:2/4
+L:1/8
+K:G
+FD FA|Be e>f|ed c>B|A>B A>G|FE DF|GB B/c/B/c/|AA B/c/d|eg ag/f/|ed e/f/g/f/|ed B/c/d|ed d/c/B/A|GF GA|BA BA|ed B/c/d|ef ed|cA BA|fe e/f/e/d/|ed cB|AG A2|
+GB Bc|BA B/c/d|eB A>B|cA A2|A>B c>B|A2 A2:|
+|:a>g fe|de f/g/f/|ed e>f|gd Bd|ef fe|dB G/A/B/c/|dA AB|ce ec|dB B>A|BA GB|AB A/B/A/|GE FG|AG AG|BA AB|AG FA|dB AB|de f/e/d/c/|Be e>d|ef ed|e/f/g/a/ g/f/e/d/|B/c/d ed|cB A>B|cA A>B|cB AG|FA AG|FA A>d|ed dB|AF AF|GA B/A/B/c/|dB AB|c/B/A/B/ ce|fe de|f2 f>e|dB c/B/A/|BA AB|cd ed|B/c/d/e/ f/g/f/|ed dB|A2 A2:|
+|:e>f ef|ed e>d|e>d BA|GE A2:|
+|:e>f ef|ed e/f/e/d/|ef e/f/e/d/|cB B>c|ef eA|ef ed|cA Ac|BA G/A/B/|Ad e>d|e>f g>f|
+de/d/ ce|ed ef|ge ce|dB B/c/d|ef ed|B/c/d/e/ f/g/e/|de dB|A>B AG|FA FA|BA AB|AG EF|GF G2|A>B A>B|AG G>A|BA A/B/c/d/|ed cB|AG A>B|1 B2 A2:|2 A2 BA|GF G/A/G/A/|BG AG|FE DE|FA A/B/A|GE FD|EF EF|GF GF/G/|AG FG|AB AG|FD D2:|
+|:B>c BA|BG AB|AG A2|A>B cA|A>B c/d/c/B|A/G/G/ FG|A>B AG|FE DE|FA BA|GE G>A|BA GA|Bd BA|Bd B>A|BA Bc|de fe|d

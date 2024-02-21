@@ -23,11 +23,9 @@ def characters_to_tensor(sequence, char_idx_map):
     """
     Converts a sequence of characters to a PyTorch tensor using the provided character set.
     (DON'T CHANGE)
-
     Args:
         sequence (list): The sequence of characters to convert.
         char_idx_map (dict): A map of characters to their index
-
     Returns:
         torch.Tensor: A PyTorch tensor representing the input sequence.
     """
@@ -37,14 +35,12 @@ def get_random_song_sequence_target(song, char_idx_map, sequence_length):
     """
     Retrieves a random sequence from the given song data along with its target sequence.
     (DON'T CHANGE)
-
     Args:
         song (list): The song data, represented as a list of characters.
         char_idx_map (dict): A map of characters to their index
         sequence_length (int): The desired length of the sequence to extract.
-
     Returns:
-        tuple: A tuple containing the PyTorch tensor representing the input sequence
+        tuple: A tuple containing the PyTorch tensor representing the input sequence 
                and the PyTorch tensor representing the target sequence.
     """
     sequence = get_random_song_slice(song, sequence_length)
@@ -66,13 +62,11 @@ def get_character_from_index(char_idx_map, index):
 
 def plot_losses(train_losses, val_losses, fname):
     """
-    Plots the training and validation losses across epochs and saves the plot as an image file with name - fname(function argument).
-
+    Plots the training and validation losses across epochs and saves the plot as an image file with name - fname(function argument). 
     Args:
         train_losses (list): List of training losses for each epoch.
         val_losses (list): List of validation losses for each epoch.
         fname (str): Name of the file to save the plot (without extension).
-
     Returns:
         None
     """
@@ -97,12 +91,10 @@ def pad(song, data, pad_factor=20):
     """
     Utility function to pad the generated song and the corresponding heatmap values.
     (DON'T CHANGE)
-
     Args:
         song (list): generated song.
         data (list): heatmap values.
         pad_factor (itn): padding data to a multiple of pad_factor.
-
     Returns:
         padded sequences
     """
@@ -112,9 +104,8 @@ def pad(song, data, pad_factor=20):
 
 def show_values(pc, song, fmt="%.2f", **kw):
     """
-    Utility function to plot the heatmap.
+    Utility function to plot the heatmap. 
     (DON'T CHANGE)
-
     Returns:
         None
     """
@@ -126,9 +117,8 @@ def show_values(pc, song, fmt="%.2f", **kw):
             color = (0.0, 0.0, 0.0)
         else:
             color = (1.0, 1.0, 1.0)
-        
+
         x_idx, y_idx = int(x-0.5), int(y-0.5)
-        
+
         if y_idx<len(song) and x_idx<len(song[0]):
             ax.text(x, y, repr(song[y_idx][x_idx])[1:-1], fontsize=45, ha="center", va="center", color=color, **kw)
-
