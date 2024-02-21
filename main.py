@@ -66,9 +66,9 @@ if __name__ == "__main__":
         plot_losses(losses, v_losses, loss_plot_file_name)
 
     # As a fun exercise, after your model is well-trained you can see how the model extends Beethoven's famous fur-elise tune
-    # with open("./data/fur_elise.txt", 'r') as file:
-    #    prime_str = file.read()
-    # print("Prime str = ", prime_str)
+#     with open("./data/fur_elise.txt", 'r') as file:
+#        prime_str = file.read()
+#     print("Prime str = ", prime_str)
 
     prime_str = '<start>'
 
@@ -85,5 +85,4 @@ if __name__ == "__main__":
     # housekeeping
     gc.collect()
     torch.cuda.empty_cache()
-
 

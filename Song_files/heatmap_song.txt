@@ -1,0 +1,16 @@
+X:65
+T:La Galoubler version Branle
+Z:id:hn-polka-44
+M:2/4
+L:1/6
+L:16
+S:Itre
+R:hornpipe
+D:Boois Ma Colka
+Z:id:hn-polka-73
+M:2/4
+L:1/4
+K:A
+GA | Ad B/c/d/e/|A^F G>A|BA B/c/d|gf/g/ ec|de dB|1 AF G/A/B/A|GE GE:|2 GB B/A/G/G/ AF|GE/F/ GF|1 GF:|2 AG E2||
+|: B/G/A/ BA|BE E2:|
+<end>
