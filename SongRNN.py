@@ -97,4 +97,4 @@ class SongRNN(nn.Module):
         
         
 #         return torch.squeeze(prob), self.h_n
-        return torch.squeeze(de1), self.h_n
+        return torch.squeeze(de1), self.h_n, torch.Tensor(dr1)

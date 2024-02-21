@@ -3,7 +3,7 @@ from constants import *
 from SongRNN import *
 import torch
 from train import *
-# from generate import *
+from generate import *
 import json
 import argparse
 import gc
@@ -12,6 +12,7 @@ with open(INPUT_TRAIN_PATH, 'r') as f:
     char_set = sorted(set(f.read()))
 
 char_idx_map = {character: index for index, character in enumerate(char_set)}
+print(char_idx_map)
 
 # TODO determine which device to use (cuda or cpu)
 device = "cpu"
@@ -58,32 +59,31 @@ if __name__ == "__main__":
         # Load the model's state dictionary from the checkpoint
         model.load_state_dict(checkpoint['model_state_dict'])
         print('==> Model loaded from checkpoint..')
-    else:
-        # Train the model and get the training and validation losses
-        losses, v_losses = train(model, data, data_val, char_idx_map, config, device)
+#     else:
+#         # Train the model and get the training and validation losses
+#         losses, v_losses = train(model, data, data_val, char_idx_map, config, device)
 
-        # Plot the training and validation losses
-        plot_losses(losses, v_losses, loss_plot_file_name)
+#         # Plot the training and validation losses
+#         plot_losses(losses, v_losses, loss_plot_file_name)
 
     # As a fun exercise, after your model is well-trained you can see how the model extends Beethoven's famous fur-elise tune
-    # with open("./data/fur_elise.txt", 'r') as file:
-    #    prime_str = file.read()
-    # print("Prime str = ", prime_str)
+    with open("./data/fur_elise.txt", 'r') as file:
+       prime_str = file.read()
+    print("Prime str = ", prime_str)
 
-    prime_str = '<start>'
+#     prime_str = '<start>'
 
-#     # Generate a song using the trained model
-#     generated_song = generate_song(model, device, char_idx_map, max_len=MAX_GENERATION_LENGTH, temp=TEMPERATURE,
-#                                     prime_str=prime_str, show_heatmap=SHOW_HEATMAP)
+    # Generate a song using the trained model
+    generated_song = generate_song(model, device, char_idx_map, max_len=MAX_GENERATION_LENGTH, temp=TEMPERATURE,
+                                    prime_str=prime_str, show_heatmap=SHOW_HEATMAP)
 
-#     # Write the generated song to a file
-#     with open(generated_song_file_path, "w") as file:
-#         file.write(generated_song)
+    # Write the generated song to a file
+    with open(generated_song_file_path, "w") as file:
+        file.write(generated_song)
 
-#     print("Generated song is written to : ", generated_song_file_path)
+    print("Generated song is written to : ", generated_song_file_path)
 
     # housekeeping
     gc.collect()
     torch.cuda.empty_cache()
-
 
